@@ -1,0 +1,68 @@
+# This configuration is for ESPnet2 to pretrain Transformer-TTS.
+
+##########################################################
+#           TTS Pretraining MODEL SETTING                #
+##########################################################
+tts_pretrain: transformer           # model architecture
+tts_pretrain_conf:                  # keyword arguments for the selected model
+    embed_dim: 0           # embedding dimension in encoder prenet
+    eprenet_conv_layers: 0 # number of conv layers in encoder prenet
+                           # if set to 0, no encoder prenet will be used
+    eprenet_conv_filts: 0  # filter size of conv layers in encoder prenet
+    eprenet_conv_chans: 0  # number of channels of conv layers in encoder prenet
+    adim: 512              # attention dimension
+    aheads: 8              # number of attention heads
+    elayers: 6             # number of encoder layers
+    eunits: 1024           # number of encoder ff units
+    positionwise_layer_type: conv1d  # type of position-wise layer
+    positionwise_conv_kernel_size: 1 # kernel size of position wise conv layer
+    use_batch_norm: True             # use batch normalization
+    use_scaled_pos_enc: True         # whether to use scaled positional encoding
+    encoder_normalize_before: True   # whether to perform layer normalization before the input
+    encoder_concat_after: False      # whether to concatenate attention layer's input and output
+    init_type: xavier_uniform        # initialization type
+    init_enc_alpha: 1.0              # initial value of alpha of encoder scaled position encoding
+    eprenet_dropout_rate: 0.0        # dropout rate for encoder prenet
+    transformer_enc_dropout_rate: 0.1                # dropout rate for transformer encoder layer
+    transformer_enc_positional_dropout_rate: 0.1     # dropout rate for transformer encoder positional encoding
+    transformer_enc_attn_dropout_rate: 0.1           # dropout rate for transformer encoder attention layer
+    langs: 21                       # number of languages
+    use_adapter: True                # whether to use language adapter
+    adapter_type: "residual"        # type of adapter
+
+##########################################################
+#            OPTIMIZER & SCHEDULER SETTING               #
+##########################################################
+optim: adam             # optimizer type
+optim_conf:             # keyword arguments for selected optimizer
+    lr: 1.0             # learning rate
+scheduler: noamlr       # scheduler type
+scheduler_conf:         # keyword arguments for selected scheduler
+    model_size: 512     # model size, a.k.a., attention dimenstion
+    warmup_steps: 10000  # the number of warmup steps
+
+##########################################################
+#                OTHER TRAINING SETTING                  #
+##########################################################
+# num_iters_per_epoch: 4000   # number of iterations per epoch
+max_epoch: 100              # number of epochs
+grad_clip: 1.0              # gradient clipping norm
+grad_noise: false           # whether to use gradient noise injection
+accum_grad: 2               # gradient accumulation
+batch_size: 48              # batch bins (for feats_type=raw, *= n_shift / n_mels)
+batch_type: unsorted        # how to make batch
+sort_in_batch: descending   # how to sort data in making batch
+sort_batch: descending      # how to sort created batches
+num_workers: 1              # number of workers of data loader
+train_dtype: float32        # dtype in training
+log_interval: null          # log interval in iterations
+keep_nbest_models: 5        # number of models to keep
+num_att_plot: 0             # number of attention figures to be saved in every check
+seed: 0                     # random seed number
+best_model_criterion:
+-   - valid
+    - loss
+    - min
+-   - train
+    - loss
+    - min

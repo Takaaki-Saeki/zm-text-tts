@@ -1,0 +1,1 @@
+from espnet2.tts_pretrain.text_encoder.text_encoder import TextEncoderPretrain  # NOQA
