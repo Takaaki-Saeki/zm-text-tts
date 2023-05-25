@@ -15,15 +15,10 @@ stop_stage=0
 
 token_type=byte
 use_css10=false
-use_fleurs=false
 use_mailabs=false
 use_voxp=false
-use_cv=false
-use_cc100=false
-use_paracrawl=false
 byte_len_filtering=true
 lang_set=null
-few_sampling_langs=null
 
 log "$0 $*"
 . utils/parse_options.sh
@@ -32,32 +27,17 @@ opts_data=""
 if [ ${use_css10} = true ]; then
     opts_data+=" --use_css10"
 fi
-if [ ${use_fleurs} = true ]; then
-    opts_data+=" --use_fleurs"
-fi
 if [ ${use_mailabs} = true ]; then
     opts_data+=" --use_mailabs"
 fi
 if [ ${use_voxp} = true ]; then
     opts_data+=" --use_voxp"
 fi
-if [ ${use_cv} = true ]; then
-    opts_data+=" --use_cv"
-fi
-if [ ${use_paracrawl} = true ]; then
-    opts_data+=" --use_paracrawl"
-fi
-if [ ${use_cc100} = true ]; then
-    opts_data+=" --use_cc100"
-fi
 if [ ${byte_len_filtering} = true ]; then
     opts_data+=" --byte_len_filtering"
 fi
 if [ ${lang_set} != null ]; then
     opts_data+=" --lang_set ${lang_set}"
-fi
-if [ ${few_sampling_langs} != null ]; then
-    opts_data+=" --few_sampling_langs ${few_sampling_langs}"
 fi
 
 if [ $# -ne 0 ]; then

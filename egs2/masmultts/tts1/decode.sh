@@ -9,43 +9,32 @@ fs=16000
 n_fft=1024
 n_shift=256
 
-################# Configs to be set #####################
-token_type=byte   # byte, tphn, phn, bphn
-use_mailabs=true
-use_css10=true
-use_fleurs=true
-use_other_tts_data=false
-use_lid=false
-use_lvector=false
-mos_filtering=false
-byte_len_filtering=true
-lang_set="lang_set.txt"
-holdout_lang_set=null
-do_trimming=false
-lang_family=null
-spk_set=null
-n_train_utt=null
-use_only_byte_for_bphn=false
-lang2lid_override=null
-token_list_override=null
-spk_override=null
-#########################################################
+################################## Configs to be set ##################################
+token_type=byte                 # byte, phn
+use_mailabs=false               # whether to use m_ailabs dataset
+use_css10=true                  # whether to use css10 dataset
+use_lid=false                   # whether to use language id
+use_lvector=false               # whether to use lang2vec-derived language vector
+mos_filtering=false             # whether to filter out low-quality samples
+byte_len_filtering=true         # whether to filter out long sentences
+lang_set="lang_set_decode.txt"  # specifying languages to use
+spk_set=null                    # specifying speakers to use
+n_train_utt=null                # specifying the number of training utterances
+lang2lid_override=null          # overriding lang2lid mapping
+token_list_override=null        # overriding token list
+spk_override=null               # overriding speaker list
+#########################################################################################
 
 local_data_opts=""
 local_data_opts+=" --token_type ${token_type}"
 local_data_opts+=" --use_mailabs ${use_mailabs}"
 local_data_opts+=" --use_css10 ${use_css10}"
-local_data_opts+=" --use_fleurs ${use_fleurs}"
 local_data_opts+=" --use_other_tts_data ${use_other_tts_data}"
 local_data_opts+=" --mos_filtering ${mos_filtering}"
 local_data_opts+=" --byte_len_filtering ${byte_len_filtering}"
 local_data_opts+=" --lang_set ${lang_set}"
-local_data_opts+=" --holdout_lang_set ${holdout_lang_set}"
-local_data_opts+=" --lang_family ${lang_family}"
-local_data_opts+=" --do_trimming ${do_trimming}"
 local_data_opts+=" --spk_set ${spk_set}"
 local_data_opts+=" --n_train_utt ${n_train_utt}"
-local_data_opts+=" --use_only_byte_for_bphn ${use_only_byte_for_bphn}"
 
 opts=
 if [ "${fs}" -eq 22050 ]; then
@@ -70,17 +59,11 @@ cleaner=none
 if [ ${token_type} = "byte" ]; then
     model_token_type=byte
     g2p=byte
-elif [ ${token_type} = "tphn" ]; then
-    model_token_type=char
-    g2p=none
 elif [ ${token_type} = "phn" ]; then
     model_token_type=phn
     g2p=none
-elif [ ${token_type} = "bphn" ]; then
-    model_token_type=word
-    g2p=none
 else
-    echo "Error: token_type must be either byte, tphn, phn, or bphn"
+    echo "Error: token_type must be either byte or phn"
     exit 1
 fi
 

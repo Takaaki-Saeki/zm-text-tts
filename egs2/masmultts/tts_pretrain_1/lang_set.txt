@@ -1,0 +1,2 @@
+de_de
+fr_fr

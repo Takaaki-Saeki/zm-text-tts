@@ -1,5 +1,5 @@
 ##########################
-token_type=tphn
+token_type=byte
 ##########################
 
 dirname="token_${token_type}"
@@ -7,10 +7,8 @@ cd ${dirname}
 
 if [ ${token_type} = "byte" ]; then
     model_token_type=byte
-elif [ ${token_type} = "tphn" ]; then
-    model_token_type=char
 elif [ ${token_type} = "phn" ]; then
-    model_token_type=char
+    model_token_type=phn
 elif [ ${token_type} = "bphn" ]; then
     model_token_type=word
 else

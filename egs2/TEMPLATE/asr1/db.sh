@@ -158,8 +158,8 @@ HARPERVALLEY=downloads
 TALROMUR=downloads
 DCASE=
 TEDX_SPANISH=downloads
-M_AILABS=/home/saeki/workspace/ssd1/mailab
-MASMULTTS=/home/saeki/workspace/ssd1/MasMulTTS
+M_AILABS=downloads
+MASMULTTS=MasMulTTS
 
 # For only CMU TIR environment
 if [[ "$(hostname)" == tir* ]]; then

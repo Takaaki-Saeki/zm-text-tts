@@ -1,0 +1,19 @@
+| Languages  | Code   |
+|------------|--------|
+| German     | de_de  |
+| Spanish    | es_419 |
+| French     | fr_fr  |
+| Russian    | ru_ru  |
+| Finnish    | fi_fi  |
+| Hungarian  | hu_hu  |
+| Dutch      | nl_nl  |
+| Greek      | el_gr  |
+| English    | en_us  |
+| Estonian   | et_ee  |
+| Croatian   | hr_hr  |
+| Italian    | it_it  |
+| Lithuanian | lt_lt  |
+| Polish     | pl_pl  |
+| Romanian   | ro_ro  |
+| Slovak     | sk_sk  |
+| Slovenian  | sl_si  |

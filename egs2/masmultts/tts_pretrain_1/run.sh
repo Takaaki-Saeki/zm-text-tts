@@ -5,21 +5,18 @@ set -e
 set -u
 set -o pipefail
 
-################# Configs to be set #####################
-token_type=byte   # byte, tphn, phn, bphn
-use_mailabs=true
-use_css10=true
-use_fleurs=true
-use_voxp=true
-use_cc100=true
-use_lid=true
-use_lvector=false
-byte_len_filtering=true
-lang_set=null
-lang2lid_override=null
-token_list_override=null
-few_sampling_langs=null
-#########################################################
+################################## Configs to be set ##################################
+token_type=byte                     # byte, phn, bphn
+use_mailabs=false                   # whether to use m_ailabs dataset
+use_css10=false                     # whether to use css10 dataset
+use_voxp=true                       # whether to use voxp dataset
+use_lid=true                        # whether to use language id
+use_lvector=false                   # whether to use lang2vec-derived language vector
+byte_len_filtering=true             # whether to filter out long sentences
+lang_set=null                       # specifying languages to use
+lang2lid_override=null              # overriding lang2lid mapping
+token_list_override=null            # overriding token list
+#######################################################################################
 
 local_data_opts=""
 local_data_opts+=" --token_type ${token_type}"
@@ -30,7 +27,6 @@ local_data_opts+=" --use_voxp ${use_voxp}"
 local_data_opts+=" --use_cc100 ${use_cc100}"
 local_data_opts+=" --byte_len_filtering ${byte_len_filtering}"
 local_data_opts+=" --lang_set ${lang_set}"
-local_data_opts+=" --few_sampling_langs ${few_sampling_langs}"
 
 opts=""
 if [ ${lang2lid_override} != null ]; then
@@ -45,17 +41,11 @@ cleaner=none
 if [ ${token_type} = "byte" ]; then
     model_token_type=byte
     g2p=byte
-elif [ ${token_type} = "tphn" ]; then
-    model_token_type=char
-    g2p=none
 elif [ ${token_type} = "phn" ]; then
     model_token_type=phn
     g2p=none
-elif [ ${token_type} = "bphn" ]; then
-    model_token_type=word
-    g2p=none
 else
-    echo "Error: token_type must be either byte, tphn, phn, or bphn"
+    echo "Error: token_type must be either byte or phn"
     exit 1
 fi
 

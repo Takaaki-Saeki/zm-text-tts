@@ -20,19 +20,14 @@ nj=32
 do_trimming=true
 token_type=byte
 use_css10=false
-use_fleurs=false
 use_mailabs=false
 use_other_tts_data=false
 mos_filtering=true
 byte_len_filtering=true
 lang_set=null
-holdout_lang_set=null
-lang_family=null
 spk_set=null
 n_train_utt=null
 override_spk_set=null
-use_only_byte_for_bphn=false
-bphn_phn_infer=false
 
 log "$0 $*"
 . utils/parse_options.sh
@@ -40,9 +35,6 @@ log "$0 $*"
 opts_data=""
 if [ ${use_css10} = true ]; then
     opts_data+=" --use_css10"
-fi
-if [ ${use_fleurs} = true ]; then
-    opts_data+=" --use_fleurs"
 fi
 if [ ${use_mailabs} = true ]; then
     opts_data+=" --use_mailabs"
@@ -59,12 +51,6 @@ fi
 if [ ${lang_set} != null ]; then
     opts_data+=" --lang_set ${lang_set}"
 fi
-if [ ${holdout_lang_set} != null ]; then
-    opts_data+=" --holdout_lang_set ${holdout_lang_set}"
-fi
-if [ ${lang_family} != null ]; then
-    opts_data+=" --lang_family ${lang_family}"
-fi
 if [ ${spk_set} != null ]; then
     opts_data+=" --spk_set ${spk_set}"
 fi
@@ -73,12 +59,6 @@ if [ ${n_train_utt} != null ]; then
 fi
 if [ ${override_spk_set} != null ]; then
     opts_data+=" --override_spk_set ${override_spk_set}"
-fi
-if [ ${use_only_byte_for_bphn} = true ]; then
-    opts_data+=" --use_only_byte_for_bphn"
-fi
-if [ ${bphn_phn_infer} = true ]; then
-    opts_data+=" --bphn_phn_infer"
 fi
 
 
