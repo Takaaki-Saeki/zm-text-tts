@@ -44,7 +44,7 @@ As a result, the root directory and the following files will be in the following
 - css10.tsv
 - css10_phn.tsv (if needed)
 ```
-Note that you can also use [M_AILABS](https://www.caito.de/2019/01/03/the-m-ailabs-speech-dataset/)).
+Note that you can also use [M_AILABS](https://www.caito.de/2019/01/03/the-m-ailabs-speech-dataset/).
 Please see [TTS data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts1/local/data_prep.py) and [Pretraining data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts_pretrain_1/local/data_prep.py) for details.
 
 ## Unsupervised text pretraining
@@ -54,7 +54,7 @@ Please see [here](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/
 Please see [here](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts1/README.md).
 
 ## Work in progress
-- [ ] Providing implementation on the paper in this standalone repo.
+- [x] Providing implementation on the paper in this standalone repo.
 - [ ] Prepare a script to automate the data preparation pipeline.
 - [ ] Integrating the implementation to ESPnet.
 - [ ] Providing pretrained models through ESPnet.
