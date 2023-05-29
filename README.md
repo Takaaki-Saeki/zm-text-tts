@@ -60,8 +60,7 @@ As a result, the root directory and the following files look like the following.
 - css10.tsv
 - css10_phn.tsv (optional)
 ```
-Note that you can also use [M_AILABS](https://www.caito.de/2019/01/03/the-m-ailabs-speech-dataset/).
-Please see [TTS data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts1/local/data_prep.py) and [Pretraining data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts_pretrain_1/local/data_prep.py) for details.
+If you want to use other TTS corpora such as [M_AILABS](https://www.caito.de/2019/01/03/the-m-ailabs-speech-dataset/),please see [TTS data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts1/local/data_prep.py) and [Pretraining data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts_pretrain_1/local/data_prep.py) for details.
 
 6. Add the path to the root directory in `db.sh` as `MASMULTTS=${db_root}`. 
 
