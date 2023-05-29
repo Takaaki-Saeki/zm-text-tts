@@ -26,7 +26,7 @@ tts_pretrain_conf:                  # keyword arguments for the selected model
     transformer_enc_dropout_rate: 0.1                # dropout rate for transformer encoder layer
     transformer_enc_positional_dropout_rate: 0.1     # dropout rate for transformer encoder positional encoding
     transformer_enc_attn_dropout_rate: 0.1           # dropout rate for transformer encoder attention layer
-    langs: 15                       # number of languages
+    langs: 15                       # Number of your total languages + 1
     use_adapter: True               # whether to use language adapter
     adapter_type: "residual"        # type of adapter
 

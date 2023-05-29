@@ -57,10 +57,10 @@ tts_conf:                  # keyword arguments for the selected model
     modules_applied_guided_attn: ["encoder-decoder"] # modules to apply guided attention loss
     guided_attn_loss_sigma: 0.4                      # sigma in guided attention loss
     guided_attn_loss_lambda: 10.0                    # lambda in guided attention loss
-    langs: 15
-    use_adapter: True
+    langs: 15                                        # Number of your total languages + 1
+    use_adapter: True                                # whether to use adapter
     adapter_type: "residual"                         # type of adapter
-    use_encoder_w_lid: True
+    use_encoder_w_lid: True                          # whether to use language ids in encoder
 
 ##########################################################
 #            OPTIMIZER & SCHEDULER SETTING               #

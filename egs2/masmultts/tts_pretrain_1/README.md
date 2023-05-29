@@ -27,6 +27,14 @@ In `run.sh`, change the following settings to define the training conditions.
 Edit `conf/train.yaml` to modify the configurations of model architecture and training conditions.
 You may only need to change `tts_pretrain_conf: langs` based on your language set.
 
+If you use the language-aware embedding layer, ensure the following config.
+```yaml
+tts_pretrain_conf:
+    langs: 15                       # Number of your total languages + 1
+    use_adapter: True               # whether to use language adapter
+    adapter_type: "residual"        # type of adapter
+```
+
 ## Running preprocessing and training
 ```
 $ ./run.sh --stage 1 --stop-stage 5
