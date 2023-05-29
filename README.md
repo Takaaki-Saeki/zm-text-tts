@@ -23,25 +23,26 @@ You can also setup system python environment.
 For other options, refer to the [ESPnet installation](https://espnet.github.io/espnet/installation.html).
 
 ## Data preparation
-1. Prepare a root directory (referred to as `db_root`) for several multilingual TTS corpora and text-only data. We have scripts to run our model in `egs2/masmultts`.
+1. Prepare a root directory (referred to as `db_root`) for several multilingual TTS corpora and text-only data. We have scripts to run our model in `egs2/masmultts`. While we assume css10 for TTS corpora and VoxPopuli for text-only data in this readme, you can use other multilingual datasets by modifying the data preparation scripts.
 
-2. Download and place the training data for TTS. If you use [css10](https://github.com/Kyubyong/css10), please downsample it from 22.05k to 16k.
+2. Download [css10](https://github.com/Kyubyong/css10) and place it in `${db_root}/css10/` for the TTS training data. Please downsample it from 22.05kHz to 16kHz in advance.
 
-3. For each token type (bytes or IPA symbols), create a TSV file to compile the data for TTS. The data format of each TSV file is as follows.
+3. Create a TSV file (`${db_root}/css10.tsv`) to compile the data for TTS. The data format of each TSV file is as follows.
 ```
 utt_name<tab>path_to_wav_file<tab>lang_name<tab>speaker_name<tab>utternace_text
 ...
 ```
 You can make the TSV file by ruinning `egs2/masmultts/make_css10_tsv.py`.
+If you use IPA symbols, you need to dump IPA symbols to `${db_root}/css10_phn.tsv` in the same format.
 
 4. Since runtime multilingual G2P is not implemented in ESPnet, IPA symbols must be dumped in advance. Replace the utterance_text in the TSV file with IPA symbols adding the suffix `_phn`.
 
-5. Place text datasets for the unsupervised text pre-training. If you are using byte tokens, put a list of utterance texts in `voxp_text/lm_data/${lang}/sentences.txt`. Each `sentence.txt` looks like:
+5. Place text datasets for the unsupervised text pre-training. Download [VoxPopuli](https://github.com/facebookresearch/voxpopuli) and put a list of utterance texts in `voxp_text/lm_data/${lang}/sentences.txt`. Each `sentence.txt` looks like:
 ```
 utternace_text
 ...
 ```
-If you use IPA, you need to dump IPA symbols to `${db_root}/voxp_text/lm_data/${lang}/sentences_phn.txt` first.
+If you use IPA symbols, you need to dump IPA symbols to `${db_root}/voxp_text/lm_data/${lang}/sentences_phn.txt` in the same format.
 
 As a result, the root directory and the following files look like the following.
 ```
@@ -53,11 +54,11 @@ As a result, the root directory and the following files look like the following.
   |- lm_data
      |- de
         |- sentences.txt
-        |- sentences_phn.txt (if needed)
+        |- sentences_phn.txt (optional)
      |- es
       ...
 - css10.tsv
-- css10_phn.tsv (if needed)
+- css10_phn.tsv (optional)
 ```
 Note that you can also use [M_AILABS](https://www.caito.de/2019/01/03/the-m-ailabs-speech-dataset/).
 Please see [TTS data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts1/local/data_prep.py) and [Pretraining data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts_pretrain_1/local/data_prep.py) for details.
