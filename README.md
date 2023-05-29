@@ -23,7 +23,7 @@ You can also setup system python environment.
 For other options, refer to the [ESPnet installation](https://espnet.github.io/espnet/installation.html).
 
 ## Data preparation
-1. We assume a root directory for several multilingual TTS corpora and text-only data.
+1. Prepare a root directory (referred to as `db_root`) for several multilingual TTS corpora and text-only data. We have scripts to run our model in `egs2/masmultts`.
 
 2. Download and place the training data for TTS. If you use [css10](https://github.com/Kyubyong/css10), please downsample it from 22.05k to 16k.
 
@@ -32,7 +32,7 @@ For other options, refer to the [ESPnet installation](https://espnet.github.io/e
 utt_name<tab>path_to_wav_file<tab>lang_name<tab>speaker_name<tab>utternace_text
 ...
 ```
-You can make the TSV file by ruinning `make_css10_tsv.py`.
+You can make the TSV file by ruinning `egs2/masmultts/make_css10_tsv.py`.
 
 4. Since runtime multilingual G2P is not implemented in ESPnet, IPA symbols must be dumped in advance. Replace the utterance_text in the TSV file with IPA symbols adding the suffix `_phn`.
 
@@ -41,7 +41,7 @@ You can make the TSV file by ruinning `make_css10_tsv.py`.
 utternace_text
 ...
 ```
-If you use IPA, you need to dump IPA symbols to `voxp_text/lm_data/${lang}/sentences_phn.txt` first.
+If you use IPA, you need to dump IPA symbols to `${db_root}/voxp_text/lm_data/${lang}/sentences_phn.txt` first.
 
 As a result, the root directory and the following files look like the following.
 ```
@@ -62,7 +62,7 @@ As a result, the root directory and the following files look like the following.
 Note that you can also use [M_AILABS](https://www.caito.de/2019/01/03/the-m-ailabs-speech-dataset/).
 Please see [TTS data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts1/local/data_prep.py) and [Pretraining data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts_pretrain_1/local/data_prep.py) for details.
 
-6. Add the path to the root directory in `db.sh` as `MASMULTTS=${path to root dir}`. 
+6. Add the path to the root directory in `db.sh` as `MASMULTTS=${db_root}`. 
 
 ## Unsupervised text pretraining
 Please see [here](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts_pretrain_1/README.md).
