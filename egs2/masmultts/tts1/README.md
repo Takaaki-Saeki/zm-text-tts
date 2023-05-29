@@ -34,7 +34,7 @@ Edit `train.yaml` to modify the configurations of model architecture and trainin
 Especially, confirm the following setting if you used the language-aware embedding layer and the text-based pretraining.
 ```yaml
 tts_conf:
-    langs: 21
+    langs: 15  # Number of your total languages + 1 
     use_adapter: True
     adapter_type: "residual"
     use_encoder_w_lid: True

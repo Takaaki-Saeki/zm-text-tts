@@ -57,7 +57,7 @@ tts_conf:                  # keyword arguments for the selected model
     modules_applied_guided_attn: ["encoder-decoder"] # modules to apply guided attention loss
     guided_attn_loss_sigma: 0.4                      # sigma in guided attention loss
     guided_attn_loss_lambda: 10.0                    # lambda in guided attention loss
-    langs: 21
+    langs: 15
     use_adapter: True
     adapter_type: "residual"                         # type of adapter
     use_encoder_w_lid: True
