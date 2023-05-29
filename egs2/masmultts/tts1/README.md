@@ -6,6 +6,8 @@ See [here](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/README.md) f
 You can switch whether to use each corpus by modifying `run.sh`.
 For example, if you are using VoxPopuli, set `use_css10=true`.
 
+For reproducibility, we parepare the utterance ids used for train, dev, test sets [here](https://github.com/Takaaki-Saeki/zm-text-tts/tree/master/egs2/masmultts/uttids_paper).
+
 ## Specifying languages to be used
 Set `lang_set.txt` in `run.sh` to determine the languages to be used for multilingual TTS training.
 if you set `null`, then the model uses all the languages contained in the specified corpora.

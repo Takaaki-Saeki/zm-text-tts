@@ -31,7 +31,9 @@ utt_name<tab>path_to_wav_file<tab>lang_name<tab>speaker_name<tab>utternace_text
 ...
 ```
 You can make the TSV file by ruinning `make_css10_tsv.py`.
+
 4. Since runtime multilingual G2P is not implemented in ESPnet, IPA symbols must be dumped in advance. Replace the utterance_text in the TSV file with IPA symbols adding the suffix `_phn`.
+
 5. Place text datasets for the unsupervised text pre-training. If you are using byte tokens, put a list of utterance texts in `voxp_text/lm_data/${lang}/sentences.txt`. If you use IPA, you need to dump IPA symbols to `voxp_text/lm_data/${lang}/sentences_phn.txt` first.
 As a result, the root directory and the following files look like the following.
 ```
@@ -51,6 +53,7 @@ As a result, the root directory and the following files look like the following.
 ```
 Note that you can also use [M_AILABS](https://www.caito.de/2019/01/03/the-m-ailabs-speech-dataset/).
 Please see [TTS data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts1/local/data_prep.py) and [Pretraining data prep](https://github.com/Takaaki-Saeki/zm-text-tts/blob/master/egs2/masmultts/tts_pretrain_1/local/data_prep.py) for details.
+
 6. Add the path to the root directory in `db.sh` as `MASMULTTS=${path to root dir}`. 
 
 ## Unsupervised text pretraining
