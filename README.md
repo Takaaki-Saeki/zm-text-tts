@@ -19,11 +19,11 @@ $ make TH_VERSION={pytorch-version} CUDA_VERSION=${cuda-version}
 # e.g.
 $ make TH_VERSION=1.10.1 CUDA_VERSION=11.3
 ```
-You can also setup system Python environment.
+You can also setup system python environment.
 For other options, refer to the [ESPnet installation](https://espnet.github.io/espnet/installation.html).
 
 ## Data preparation
-1. We assume a root directory for various multilingual data. Let `root_path="/workspace/root"` be the root directory. Then, specify the path to the root dir for `MASMULTTS` in db.sh.
+1. We assume a root directory for several multilingual TTS corpora and text-only data.
 
 2. Download and place the training data for TTS. If you use [css10](https://github.com/Kyubyong/css10), please downsample it from 22.05k to 16k.
 
@@ -36,7 +36,13 @@ You can make the TSV file by ruinning `make_css10_tsv.py`.
 
 4. Since runtime multilingual G2P is not implemented in ESPnet, IPA symbols must be dumped in advance. Replace the utterance_text in the TSV file with IPA symbols adding the suffix `_phn`.
 
-5. Place text datasets for the unsupervised text pre-training. If you are using byte tokens, put a list of utterance texts in `voxp_text/lm_data/${lang}/sentences.txt`. If you use IPA, you need to dump IPA symbols to `voxp_text/lm_data/${lang}/sentences_phn.txt` first.
+5. Place text datasets for the unsupervised text pre-training. If you are using byte tokens, put a list of utterance texts in `voxp_text/lm_data/${lang}/sentences.txt`. Each `sentence.txt` looks like:
+```
+utternace_text
+...
+```
+If you use IPA, you need to dump IPA symbols to `voxp_text/lm_data/${lang}/sentences_phn.txt` first.
+
 As a result, the root directory and the following files look like the following.
 ```
 - css10/
