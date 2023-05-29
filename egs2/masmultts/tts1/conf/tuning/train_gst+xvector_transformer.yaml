@@ -106,6 +106,6 @@ freeze_param: [
 "tts.lid_emb",
 ]
 init_param: [
-"../tts_pretrain_byte_residual/exp/tts_train_byte/2epoch.pth:tts_pretrain.encoder:tts.encoder",
-"../tts_pretrain_byte_residual/exp/tts_train_byte/2epoch.pth:tts_pretrain.lid_emb:tts.lid_emb",
+"../tts_pretrain_1/exp/tts_train_byte/latest.pth:tts_pretrain.encoder:tts.encoder",
+"../tts_pretrain_1/exp/tts_train_byte/latest.pth:tts_pretrain.lid_emb:tts.lid_emb",
 ]

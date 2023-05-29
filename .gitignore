@@ -84,4 +84,5 @@ tools/py3mmseg
 tools/anaconda
 tools/ice-g2p
 tools/fairseq
+tools/miniconda
 tools/._*

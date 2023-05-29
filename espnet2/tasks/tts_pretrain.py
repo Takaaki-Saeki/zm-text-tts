@@ -18,7 +18,6 @@ from espnet2.train.trainer import Trainer
 from espnet2.tts_pretrain.abs_tts_pretrain import AbsTTSPretrain
 from espnet2.tts_pretrain.espnet_model import ESPnetTTSPretrainModel
 from espnet2.tts_pretrain.transformer import TransformerPretrain
-from espnet2.tts_pretrain.text_encoder import TextEncoderPretrain
 from espnet2.utils.get_default_kwargs import get_default_kwargs
 from espnet2.utils.nested_dict_action import NestedDictAction
 from espnet2.utils.types import int_or_none, str2bool, str_or_none
@@ -26,8 +25,7 @@ from espnet2.utils.types import int_or_none, str2bool, str_or_none
 tts_choices = ClassChoices(
     "tts_pretrain",
     classes=dict(
-        transformer=TransformerPretrain,
-        text_encoder=TextEncoderPretrain,
+        transformer=TransformerPretrain
     ),
     type_check=AbsTTSPretrain,
     default="transformer",

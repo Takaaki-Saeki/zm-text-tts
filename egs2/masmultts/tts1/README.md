@@ -29,6 +29,24 @@ This means that languages included in `lang_set_decode.txt` but not present in `
 ## Configuring other training setting and model architectures.
 Edit `train.yaml` to modify the configurations of model architecture and training conditions.
 
+Especially, confirm the following setting if you used the language-aware embedding layer and the text-based pretraining.
+```yaml
+tts_conf:
+    langs: 21
+    use_adapter: True
+    adapter_type: "residual"
+    use_encoder_w_lid: True
+freeze_param: [
+"tts.encoder.adapter",
+"tts.encoder.embed",
+"tts.lid_emb",
+]
+init_param: [
+"../tts_pretrain_1/exp/tts_train_byte/latest.pth:tts_pretrain.encoder:tts.encoder",
+"../tts_pretrain_1/exp/tts_train_byte/latest.pth:tts_pretrain.lid_emb:tts.lid_emb",
+]
+```
+
 ## Running reprocessing and training
 
 ```

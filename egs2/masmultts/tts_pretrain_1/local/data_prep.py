@@ -61,8 +61,7 @@ class DataProcessorVoxp:
         db_dir,
         token_type="byte",
         lang_set=None,
-        byte_len_filtering=False,
-        few_sampling_langs=None
+        byte_len_filtering=False
     ):
         self.dst_dir = pathlib.Path("data")
         self.token_type = token_type
@@ -73,11 +72,6 @@ class DataProcessorVoxp:
         self.db_dir = db_dir / "voxp_text" / "lm_data"
         self.data_type = "voxp"
         self.seed = 0
-        if few_sampling_langs is not None:
-            with open(few_sampling_langs, "r") as fr:
-                self.few_sampling_langs = [line.strip() for line in fr]
-        else:
-            self.few_sampling_langs = None
 
         self.voxp_langs = [
             "en", "de", "es", "et", "cs", "fi", "fr", "hr", "hu", "it", "lt", "nl", "pl", "ro", "sk", "sl"
@@ -172,8 +166,6 @@ class DataProcessorVoxp:
             uttids_all = {}
             train_idx = rand_idx[self.n_dev+self.n_test :]
             uttids_all["train"] = [langutt[idx] for idx in train_idx]
-            if (self.few_sampling_langs is not None) and (lang in self.few_sampling_langs):
-                uttids_all["train"] = random.sample(uttids_all["train"], int(len(uttids_all["train"])*0.1))
             if self.byte_len_filtering:
                 uttids_all["train"] = self.get_byte_len_filtered_uttids(uttids_all["train"])
             dev_idx = rand_idx[: self.n_dev]
@@ -383,9 +375,7 @@ def main():
             args.db_dir,
             args.token_type,
             args.lang_set,
-            args.byte_len_filtering,
-            args.few_sampling_langs
-        ).process()
+            args.byte_len_filtering).process()
         data_types.append("voxp")
     
     assert len(data_types) > 0, "No data type is specified."

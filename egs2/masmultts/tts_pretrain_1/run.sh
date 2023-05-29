@@ -13,7 +13,7 @@ use_voxp=true                       # whether to use voxp dataset
 use_lid=true                        # whether to use language id
 use_lvector=false                   # whether to use lang2vec-derived language vector
 byte_len_filtering=true             # whether to filter out long sentences
-lang_set=null                       # specifying languages to use
+lang_set=lang_set.txt                       # specifying languages to use
 lang2lid_override=null              # overriding lang2lid mapping
 token_list_override=null            # overriding token list
 #######################################################################################
@@ -22,9 +22,7 @@ local_data_opts=""
 local_data_opts+=" --token_type ${token_type}"
 local_data_opts+=" --use_mailabs ${use_mailabs}"
 local_data_opts+=" --use_css10 ${use_css10}"
-local_data_opts+=" --use_fleurs ${use_fleurs}"
 local_data_opts+=" --use_voxp ${use_voxp}"
-local_data_opts+=" --use_cc100 ${use_cc100}"
 local_data_opts+=" --byte_len_filtering ${byte_len_filtering}"
 local_data_opts+=" --lang_set ${lang_set}"
 

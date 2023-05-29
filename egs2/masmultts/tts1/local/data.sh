@@ -17,7 +17,7 @@ stop_stage=1
 fs=16000
 nj=32
 
-do_trimming=true
+do_trimming=false
 token_type=byte
 use_css10=false
 use_mailabs=false
