@@ -24,7 +24,9 @@ For other options, refer to the [ESPnet installation](https://espnet.github.io/e
 
 ## Data preparation
 1. We assume a root directory for various multilingual data. Let `root_path="/workspace/root"` be the root directory. Then, specify the path to the root dir for `MASMULTTS` in db.sh.
+
 2. Download and place the training data for TTS. If you use [css10](https://github.com/Kyubyong/css10), please downsample it from 22.05k to 16k.
+
 3. For each token type (bytes or IPA symbols), create a TSV file to compile the data for TTS. The data format of each TSV file is as follows.
 ```
 utt_name<tab>path_to_wav_file<tab>lang_name<tab>speaker_name<tab>utternace_text

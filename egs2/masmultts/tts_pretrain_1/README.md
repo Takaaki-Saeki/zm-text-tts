@@ -29,5 +29,5 @@ You may only need to change `tts_pretrain_conf: langs` based on your language se
 
 ## Running preprocessing and training
 ```
-./run.sh --stage 1 --stop-stage 5
+$ ./run.sh --stage 1 --stop-stage 5
 ```

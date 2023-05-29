@@ -52,14 +52,14 @@ init_param: [
 ## Running reprocessing and training
 
 ```
-./run.sh --stage 1 --stop-stage 6
+$ ./run.sh --stage 1 --stop-stage 6
 ```
 
 ## Inference
 Ensure the `decode.sh` is consistent with `run.sh` except for `lang_set`.
 Then run the inference with the following command.
 ```
-./decode.sh --stage 7 --stop-stage 7 \
+$ ./decode.sh --stage 7 --stop-stage 7 \
   --gpu_inference false \
   --vocoder_file "${path to hifigan_ckpt}" \
   --inference_tag decode_hifigan
