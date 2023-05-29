@@ -9,13 +9,15 @@ While neural text-to-speech (TTS) has achieved human-like natural synthetic spee
 ## Environment setup
 ```shell
 $ cd tools
-$ ./setup_anaconda.sh [output-dir-name|default=venv] [conda-env-name|default=root] [python-version|default=none]
+$ ./setup_anaconda.sh ${output-dir-name|default=venv} ${conda-env-name|default=root} ${python-version|default=none}
 # e.g.
 $ ./setup_anaconda.sh miniconda zmtts 3.8
 ```
 Then install espent.
 ```shell
-make TH_VERSION=1.10.1 CUDA_VERSION=11.3
+$ make TH_VERSION={pytorch-version} CUDA_VERSION=${cuda-version}
+# e.g.
+$ make TH_VERSION=1.10.1 CUDA_VERSION=11.3
 ```
 You can also setup system Python environment.
 For other options, refer to the [ESPnet installation](https://espnet.github.io/espnet/installation.html).
