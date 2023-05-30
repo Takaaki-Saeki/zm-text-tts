@@ -4,118 +4,10 @@ import warnings
 from typing import Iterable, List, Optional, Union
 from espnet2.text.abs_tokenizer import AbsTokenizer
 import argparse
-import codecs
 import pathlib
 import tqdm
 from espnet2.text.phoneme_tokenizer import PhonemeTokenizer
-import numpy
-import os
 import unicodedata
-
-def tsv():
-    """Run phoneme conversion."""
-
-    phoneme_tokenizers = {}
-    if args.data_type == "mailabs":
-        for lang in langtable_mailabs().keys():
-            lcode = langtable_mailabs()[lang]
-            lcode = g2p_langtable()[lcode]
-            phoneme_tokenizers[lcode] = PhonemeTokenizer(lcode)
-    elif args.data_type == "css10":
-        for lang in langtable_css10().keys():
-            lcode = langtable_css10()[lang]
-            lcode = g2p_langtable()[lcode]
-            phoneme_tokenizers[lcode] = PhonemeTokenizer(lcode)
-
-    in_list = []
-    with open(args.in_text, "r") as fr:
-        for line in fr:
-            in_list.append(line.strip())
-    
-    out_list = []
-    for line in tqdm.tqdm(in_list):
-        line_list = line.strip().split("\t")
-        if len(line_list) < 5:
-            continue
-        lang = line_list[2]
-        if args.data_type == "mailabs":
-            lcode = langtable_mailabs()[lang]
-        elif args.data_type == "css10":
-            lcode = langtable_css10()[lang]
-        uttid = line_list[0]
-        lcode = g2p_langtable()[lcode]
-        text = line_list[4]
-        tokenizer = phoneme_tokenizers[lcode]
-        phn_text = " ".join(tokenizer.text2tokens(text))
-        out_line = [
-            line_list[0],
-            line_list[1],
-            line_list[2],
-            line_list[3],
-            phn_text
-        ]
-        out_list.append("\t".join(out_line))
-    
-    with open(args.out_text, "w") as fw:
-        fw.write("\n".join(out_list))
-
-def voxp():
-    """Run phoneme conversion."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--db_dir", type=pathlib.Path, help="Input kaldi-style text.")
-    args = parser.parse_args()
-
-    out_dir = pathlib.Path("data")
-
-    phoneme_tokenizers = {}
-    for lang in langtable_voxp().keys():
-        lcode = langtable_voxp()[lang]
-        lcode = g2p_langtable()[lcode]
-        phoneme_tokenizers[lcode] = PhonemeTokenizer(lcode)
-
-    for lang in langtable_voxp().keys():
-        print(f"Processing {lang} ...")
-        text_path = args.db_dir / lang / "sentences.txt"
-        os.makedirs(out_dir / lang, exist_ok=True)
-        out_path_phn = out_dir / lang / "sentences_phn.txt"
-        if out_path_phn.exists():
-            print(f"{lang} is already processed. Skipping.")
-            continue
-    
-        in_list = []
-        out_list_phn = []
-        with open(text_path, "r") as fr:
-            for line in fr:
-                in_list.append(line.strip())
-            
-        for line in tqdm.tqdm(in_list):
-            lcode = langtable_voxp()[lang]
-            lcode = g2p_langtable()[lcode]
-            text = basic_normalizer(line)
-            if len(text) == 0:
-                continue
-            try:
-                tokenizer = phoneme_tokenizers[lcode]
-                phn_text = " ".join(tokenizer.text2tokens(text))
-                out_list_phn.append(phn_text)
-            except:
-                continue
-        
-        with open(out_path_phn, "w") as fw:
-            fw.write("\n".join(out_list_phn))
-
-def remove_symbols(s: str):
-    return "".join(
-        " " if unicodedata.category(c)[0] in "MSP" else c for c in unicodedata.normalize("NFKC", s)
-    )
-
-def basic_normalizer(s: str) -> str:
-    s = s.lower()
-    s = re.sub(r"[<\[][^>\]]*[>\]]", "", s)  # remove words between brackets
-    s = re.sub(r"\(([^)]+?)\)", "", s)  # remove words between parenthesis
-    s = remove_symbols(s).lower()
-    s = re.sub(r"\s+", " ", s)  # replace any successive whitespace characters with a space
-    return s
 
 
 class Phonemizer:
@@ -281,28 +173,22 @@ def langtable_voxp():
 
 def g2p_langtable():
     return {
-        "ast_es": "es", # Not existed
         "bs_ba": "bs",
         "ca_es": "ca",
         "hr_hr": "hr",
         "da_dk": "da",
         "nl_nl": "nl",
-        "en_uk": "en-us",
         "en_us": "en-us",
         "fi_fi": "fi",
         "fr_fr": "fr-fr",
-        "gl_es": "pt", # Not existed
         "de_de": "de",
         "el_gr": "el",
         "hu_hu": "hu",
         "is_is": "is",
         "ga_ie": "ga",
         "it_it": "it",
-        "kea_cv": "pt", # Not existed
-        "lb_lu": "pt", # Not existed
         "mt_mt": "mt",
         "nb_no": "nb",
-        "oc_fr": "ca", # Not existed
         "pt_br": "pt-br",
         "es_419": "es",
         "sv_se": "sv",
@@ -363,16 +249,113 @@ def g2p_langtable():
     }
 
 
+def remove_symbols(s: str):
+    return "".join(
+        " " if unicodedata.category(c)[0] in "MSP" else c for c in unicodedata.normalize("NFKC", s)
+    )
+
+
+def basic_normalizer(s: str) -> str:
+    s = s.lower()
+    s = re.sub(r"[<\[][^>\]]*[>\]]", "", s)  # remove words between brackets
+    s = re.sub(r"\(([^)]+?)\)", "", s)  # remove words between parenthesis
+    s = remove_symbols(s).lower()
+    s = re.sub(r"\s+", " ", s)  # replace any successive whitespace characters with a space
+    return s
+
+
+def tsv(args):
+    """Performing G2P conversion and making new tsv files."""
+
+    phoneme_tokenizers = {}
+    if args.data_type == "mailabs":
+        for lang in langtable_mailabs().keys():
+            lcode = langtable_mailabs()[lang]
+            lcode = g2p_langtable()[lcode]
+            phoneme_tokenizers[lcode] = PhonemeTokenizer(lcode)
+    elif args.data_type == "css10":
+        for lang in langtable_css10().keys():
+            lcode = langtable_css10()[lang]
+            lcode = g2p_langtable()[lcode]
+            phoneme_tokenizers[lcode] = PhonemeTokenizer(lcode)
+
+    in_list = []
+    with open(args.in_path, "r") as fr:
+        for line in fr:
+            in_list.append(line.strip())
+    out_path = args.in_path.parent / (args.in_path.stem + "_phn.tsv")
+    
+    out_list = []
+    print(f"Generating new tsv file for {args.data_type}...")
+    for line in tqdm.tqdm(in_list):
+        line_list = line.strip().split("\t")
+        if len(line_list) < 5:
+            continue
+        lang = line_list[2]
+        if args.data_type == "mailabs":
+            lcode = langtable_mailabs()[lang]
+        elif args.data_type == "css10":
+            lcode = langtable_css10()[lang]
+        lcode = g2p_langtable()[lcode]
+        text = line_list[4]
+        if args.normalize:
+            text = basic_normalizer(text)
+        tokenizer = phoneme_tokenizers[lcode]
+        phn_text = " ".join(tokenizer.text2tokens(text))
+        out_line = [
+            line_list[0],
+            line_list[1],
+            line_list[2],
+            line_list[3],
+            phn_text
+        ]
+        out_list.append("\t".join(out_line))
+    
+    with open(out_path, "w") as fw:
+        fw.write("\n".join(out_list))
+
+
+def voxp(args):
+    """Run phoneme conversion."""
+
+    phoneme_tokenizers = {}
+    for lang in langtable_voxp().keys():
+        lcode = langtable_voxp()[lang]
+        lcode = g2p_langtable()[lcode]
+        phoneme_tokenizers[lcode] = PhonemeTokenizer(lcode)
+
+    text_path = args.in_path
+    lang = text_path.parent.stem
+    out_path_phn = args.in_path.parent / "sentences_phn.txt"
+    
+    in_list = []
+    out_list_phn = []
+    with open(text_path, "r") as fr:
+        for line in fr:
+            in_list.append(line.strip())
+    
+    print(f"Generating new tsv file for {lang} in {args.data_type}...")
+    for line in tqdm.tqdm(in_list):
+        lcode = langtable_voxp()[lang]
+        lcode = g2p_langtable()[lcode]
+        if args.normalize:
+            text = basic_normalizer(line)
+        tokenizer = phoneme_tokenizers[lcode]
+        phn_text = " ".join(tokenizer.text2tokens(text))
+        out_list_phn.append(phn_text)
+        
+    with open(out_path_phn, "w") as fw:
+        fw.write("\n".join(out_list_phn))
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--in_text", type=pathlib.Path, help="Input kaldi-style text.")
-    parser.add_argument("--out_text", type=pathlib.Path, help="Output kaldi-style text.")
+    parser.add_argument("--in_path", type=pathlib.Path, help="Input .tsv or sentences.txt files to be processed")
     parser.add_argument("--data_type", type=str, choices=["mailabs", "css10", "voxp"])
+    parser.add_argument("--normalize", action="store_true", help="Normalize text before G2P conversion")
     args = parser.parse_args()
 
-    if args.data_type == "mailabs":
-        tsv(args)
-    elif args.data_type == "css10":
+    if args.data_type in ("css10", "mailabs"):
         tsv(args)
     else:
         voxp(args)

@@ -33,7 +33,12 @@ utt_name<tab>path_to_wav_file<tab>lang_name<tab>speaker_name<tab>utternace_text
 ...
 ```
 You can make the TSV file by ruinning `egs2/masmultts/make_css10_tsv.py`.
-If you use IPA symbols, you need to dump IPA symbols to `${db_root}/css10_phn.tsv` in the same format.
+
+If you use IPA symbols, you need to dump IPA symbols to `${db_root}/css10_phn.tsv` in the same format. You can perform it using `egs2/masmultts/tts_pretrain_1/g2p.py` as follows after installing [phonemizer](https://github.com/bootphon/phonemizer).
+```shell
+$ pip3 install phonemizer
+$ python3 g2p.py --in_path ${db_dir}/css10.tsv --data_type css10
+```
 
 4. Since runtime multilingual G2P is not implemented in ESPnet, IPA symbols must be dumped in advance. Replace the utterance_text in the TSV file with IPA symbols adding the suffix `_phn`.
 
@@ -42,7 +47,10 @@ If you use IPA symbols, you need to dump IPA symbols to `${db_root}/css10_phn.ts
 utternace_text
 ...
 ```
-If you use IPA symbols, you need to dump IPA symbols to `${db_root}/voxp_text/lm_data/${lang}/sentences_phn.txt` in the same format.
+If you use IPA symbols, you need to dump IPA symbols to `${db_root}/voxp_text/lm_data/${lang}/sentences_phn.txt` in the same format. You can use `egs2/masmultts/tts_pretrain_1/g2p.py` here.
+```shell
+$ python3 g2p.py --in_path ${db_dir}/voxp_text/lm_data/de/sentences.txt --data_type voxp
+```
 
 As a result, the root directory and the following files look like the following.
 ```
