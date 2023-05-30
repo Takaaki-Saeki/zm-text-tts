@@ -64,3 +64,5 @@ $ ./decode.sh --stage 7 --stop-stage 7 \
   --vocoder_file "${path to hifigan_ckpt}" \
   --inference_tag decode_hifigan
 ```
+
+You can find our HiFi-GAN checkpoint trained on LibriTTS, VCTK, and CSS10 [here](https://drive.google.com/drive/folders/1pemypbNBYJPf_rT2pzcnVk7GjK8WtX4E?usp=sharing).
